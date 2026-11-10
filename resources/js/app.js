@@ -1,0 +1,35 @@
+import './bootstrap';
+import 'bootstrap';
+import Swal from 'sweetalert2';
+
+window.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-confirm-delete]');
+    if (!button || button.dataset.confirmed === 'true') return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const result = await Swal.fire({
+        title: 'Hapus data?',
+        text: 'Data yang sudah memiliki histori tidak dapat dihapus.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Hapus',
+        cancelButtonText: 'Batal',
+        confirmButtonColor: '#dc2626',
+    });
+
+    if (result.isConfirmed) {
+        button.dataset.confirmed = 'true';
+        button.click();
+        delete button.dataset.confirmed;
+    }
+}, true);
+
+window.addEventListener('livewire:init', () => {
+    Livewire.hook('request', ({ fail }) => {
+        fail(({ preventDefault }) => {
+            preventDefault();
+            Swal.fire({ title: 'Permintaan gagal', text: 'Periksa koneksi lalu coba lagi.', icon: 'error' });
+        });
+    });
+});

@@ -1,0 +1,42 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_KEY: ${APP_KEY:-}
+      DB_CONNECTION: mariadb
+      DB_HOST: mariadb
+      DB_PORT: 3306
+      DB_DATABASE: sipus
+      DB_USERNAME: sipus
+      DB_PASSWORD: sipus_local
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+  mariadb:
+    image: mariadb:11.4
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: sipus
+      MARIADB_USER: sipus
+      MARIADB_PASSWORD: sipus_local
+      MARIADB_ROOT_PASSWORD: root_local
+    ports:
+      - "3307:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mariadb_data:

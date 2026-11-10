@@ -1,0 +1,28 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+:root {
+    --sipus-primary: #166534;
+    --sipus-primary-dark: #14532d;
+    --sipus-primary-deep: #064e3b;
+    --sipus-primary-soft: #dcfce7;
+    --sipus-accent: #d4a72c;
+    --sipus-bg: #f5f8f5;
+    --sipus-surface: #ffffff;
+    --sipus-text: #1f2937;
+    --sipus-muted: #64748b;
+    --sipus-border: #e2e8f0;
+}
+
+body { background: var(--sipus-bg); color: var(--sipus-text); }
+.sipus-sidebar { min-height: 100vh; background: var(--sipus-primary-dark); }
+.sipus-sidebar .nav-link { color: #e2f3e7; border-radius: .375rem; }
+.sipus-sidebar .nav-link:hover, .sipus-sidebar .nav-link.active { background: var(--sipus-primary); color: #fff; }
+.sipus-sidebar .text-muted { color: #facc15 !important; font-weight: 700; }
+.sipus-brand { color: #fff; letter-spacing: .02em; }
+.sipus-main { min-height: 100vh; }
+.sipus-topbar { background: var(--sipus-surface); border-bottom: 1px solid var(--sipus-border); }
+.card { border-color: var(--sipus-border); box-shadow: 0 1px 2px rgb(15 23 42 / 4%); }
+.btn-primary { --bs-btn-bg: var(--sipus-primary); --bs-btn-border-color: var(--sipus-primary); --bs-btn-hover-bg: var(--sipus-primary-dark); --bs-btn-hover-border-color: var(--sipus-primary-dark); }
+.text-primary { color: var(--sipus-primary) !important; }
+:focus-visible { outline: 3px solid var(--sipus-accent); outline-offset: 2px; }
