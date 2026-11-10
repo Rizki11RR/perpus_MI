@@ -27,9 +27,11 @@ class ImportIndex extends Component
 
     public function commit(ImportService $service): void
     {
-        abort_unless($this->batchId, 422);
-        $service->commit(ImportBatch::findOrFail($this->batchId), auth()->id(), true);
-        session()->flash('success', 'Import berhasil disimpan.'); $this->reset(['file','batchId']);
+        $batch = ImportBatch::with('rows')->whereKey($this->batchId)->where('uploaded_by', auth()->id())->firstOrFail();
+        abort_if($batch->status !== 'preview', 422, 'Preview import sudah diproses.');
+        $service->commit($batch, auth()->id(), true);
+        $this->reset(['file', 'batchId']);
+        session()->flash('success', 'Import berhasil disimpan.');
     }
 
     public function render()
