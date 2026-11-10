@@ -33,4 +33,18 @@ class ImportTest extends TestCase
         $user = User::factory()->create(); $batch = app(ImportService::class)->preview(UploadedFile::fake()->createWithContent('students.csv', "student_number,full_name\n,Siswa\n"), 'students', $user->id);
         $this->assertSame(1, $batch->invalid_rows); $this->assertFalse($batch->rows->first()->is_valid);
     }
+
+    public function test_csv_header_is_class_only_and_bom_is_supported(): void
+    {
+        $user = User::factory()->create();
+        $batch = app(ImportService::class)->preview(UploadedFile::fake()->createWithContent('students.csv', "\xEF\xBB\xBFstudent_number,full_name\nS-1,Siswa\n"), 'students', $user->id);
+        $this->assertSame(1, $batch->valid_rows);
+    }
+
+    public function test_duplicate_headers_are_rejected(): void
+    {
+        $user = User::factory()->create();
+        $this->expectException(\Illuminate\Validation\ValidationException::class);
+        app(ImportService::class)->preview(UploadedFile::fake()->createWithContent('students.csv', "student_number,full_name,full_name\nS-1,Siswa,Siswa\n"), 'students', $user->id);
+    }
 }

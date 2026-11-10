@@ -22,12 +22,23 @@ class ImportService
         $batch = DB::transaction(function () use ($file, $type, $userId): ImportBatch {
             $batch = ImportBatch::create(['type'=>$type,'file_name'=>$file->getClientOriginalName(),'uploaded_by'=>$userId,'status'=>'preview']);
             $handle = fopen($file->getRealPath(), 'r');
-            $headers = array_map(fn ($value) => strtolower(trim((string) $value)), fgetcsv($handle) ?: []);
+            if ($handle === false) throw ValidationException::withMessages(['file'=>'File CSV tidak dapat dibaca.']);
+            $headers = array_map(fn ($value) => strtolower(trim((string) $value, " \t\r\n\xEF\xBB\xBF")), fgetcsv($handle) ?: []);
             $requiredHeaders = match ($type) { 'books'=>['book_code','title','category'], 'students'=>['student_number','full_name'], default=>['full_name'] };
-            if (array_diff($requiredHeaders, $headers)) throw ValidationException::withMessages(['file'=>'Header CSV tidak lengkap.']);
+            if (count($headers) !== count(array_unique($headers)) || array_diff($requiredHeaders, $headers)) {
+                fclose($handle);
+                throw ValidationException::withMessages(['file'=>'Header CSV tidak lengkap atau duplikat.']);
+            }
             $valid = $invalid = 0; $rowNumber = 1; $seen = [];
             while (($values = fgetcsv($handle)) !== false) {
-                $rowNumber++; $payload = array_combine($headers, array_pad($values, count($headers), null)) ?: []; $key = $type === 'books' ? ($payload['book_code'] ?? '') : ($type === 'students' ? ($payload['student_number'] ?? '') : ($payload['teacher_number'] ?? $payload['full_name'] ?? '')); $errors = $this->validateRow($payload, $type); if ($key !== '' && isset($seen[$key])) $errors['duplicate'] = 'Duplikat dalam file.'; $seen[$key] = true;
+                if (count($values) === 1 && trim((string) $values[0]) === '') continue;
+                $rowNumber++;
+                $payload = array_combine($headers, array_pad(array_slice($values, 0, count($headers)), count($headers), null)) ?: [];
+                $payload = array_map(fn ($value) => is_string($value) ? trim($value) : $value, $payload);
+                $key = $type === 'books' ? ($payload['book_code'] ?? '') : ($type === 'students' ? ($payload['student_number'] ?? '') : ($payload['teacher_number'] ?? $payload['full_name'] ?? ''));
+                $errors = $this->validateRow($payload, $type);
+                if ($key !== '' && isset($seen[$key])) $errors['duplicate'] = 'Duplikat dalam file.';
+                if ($key !== '') $seen[$key] = true;
                 ImportBatchRow::create(['import_batch_id'=>$batch->id,'row_number'=>$rowNumber,'payload'=>$payload,'errors'=>$errors ?: null,'is_valid'=>!$errors]); $errors ? $invalid++ : $valid++;
             }
             fclose($handle); $batch->update(['valid_rows'=>$valid,'invalid_rows'=>$invalid]); return $batch;
