@@ -27,8 +27,15 @@ window.addEventListener('click', async (event) => {
 
 window.addEventListener('livewire:init', () => {
     Livewire.hook('request', ({ fail }) => {
+        document.getElementById('livewire-error')?.classList.add('d-none');
+
         fail(({ preventDefault }) => {
             preventDefault();
+            const alert = document.getElementById('livewire-error');
+            if (alert) {
+                alert.textContent = 'Permintaan gagal. Periksa koneksi lalu coba lagi.';
+                alert.classList.remove('d-none');
+            }
             Swal.fire({ title: 'Permintaan gagal', text: 'Periksa koneksi lalu coba lagi.', icon: 'error' });
         });
     });

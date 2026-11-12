@@ -14,6 +14,12 @@ class ImportIndex extends Component
     public string $type = 'books';
     public $file;
     public ?int $batchId = null;
+
+    public function mount(?string $type = null): void
+    {
+        if ($type) $this->type = $type;
+    }
+
     public function downloadTemplate(): mixed { $headers = match ($this->type) { 'books'=>['book_code','title','category','author','publisher'], 'students'=>['student_number','full_name','class'], default=>['teacher_number','full_name'] }; return response()->streamDownload(function () use ($headers) { $handle = fopen('php://output', 'w'); fputcsv($handle, $headers); fclose($handle); }, $this->type.'-template.csv', ['Content-Type'=>'text/csv']); }
 
     public function preview(ImportService $service): void

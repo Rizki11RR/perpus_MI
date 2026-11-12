@@ -55,10 +55,44 @@
             </div>
         </header>
         <section class="p-3 p-lg-4">
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" aria-live="assertive">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" aria-live="assertive">
+                    <strong>Periksa data berikut:</strong>
+                    <ul class="mb-0 mt-2">
+                        @foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach
+                    </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                </div>
+            @endif
+            <div id="livewire-error" class="alert alert-danger alert-dismissible fade show d-none" role="alert" aria-live="assertive">
+                <span></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+            </div>
+            <div wire:loading class="alert alert-info" role="status" aria-live="polite">Memproses permintaan...</div>
             {{ $slot }}
         </section>
     </main>
 </div>
 @livewireScripts
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.hook('request', ({ fail }) => {
+            fail(({ status, preventDefault }) => {
+                const alert = document.getElementById('livewire-error');
+                if (alert) {
+                    alert.querySelector('span').textContent = `Permintaan gagal (${status}). Periksa data lalu coba lagi.`;
+                    alert.classList.remove('d-none');
+                }
+                preventDefault();
+            });
+        });
+    });
+</script>
 </body>
 </html>

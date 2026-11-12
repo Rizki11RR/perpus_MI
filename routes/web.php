@@ -51,6 +51,7 @@ Route::middleware(['auth', 'active'])->group(function () {
  Route::get('/sirkulasi', LoanIndex::class)->name('circulation');
  Route::get('/laporan', ReportIndex::class)->name('reports');
  Route::get('/import', ImportIndex::class)->name('imports');
+ Route::get('/import/{type}', ImportIndex::class)->whereIn('type', ['books', 'students', 'teachers'])->name('imports.type');
  Route::get('/backup', BackupIndex::class)->middleware('role:admin')->name('backups');
  Route::get('/backup/{backup}/download', [BackupController::class, 'download'])->middleware('role:admin')->name('backups.download');
  Route::get('/laporan/{type}.csv', [ReportExportController::class, 'csv'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.csv');

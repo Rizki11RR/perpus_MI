@@ -631,3 +631,19 @@ berikutnya.
 - Nama kelas dibuat unik.
 - Migration `2026_10_27_120000_simplify_classes_to_name_only.php` dijalankan lokal.
 - QA: 45 tests passed, 103 assertions.
+
+### 2026-11-10 --- Import diperkuat
+
+- Commit import tidak lagi memakai abort exception untuk error user.
+- Ownership/status batch divalidasi dan error ditampilkan pada UI.
+- CSV BOM, header duplikat, file tidak terbaca, baris kosong, dan kolom ekstra ditangani.
+- Tombol preview/commit memiliki loading state dan tipe button eksplisit.
+- Test bertambah: BOM/header CSV; total 47 passed, 105 assertions.
+
+### 2026-11-10 --- Feedback tombol dan error Livewire
+
+- Alert global `Memproses permintaan...` ditambahkan pada layout.
+- Request Livewire gagal sekarang menampilkan status HTTP kepada pengguna.
+- Form kategori, buku, salinan, dan import memiliki feedback loading.
+- Error validasi import tampil pada halaman.
+- QA: 47 tests passed, 105 assertions; build lulus.

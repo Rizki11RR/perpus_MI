@@ -34,10 +34,26 @@
             </div>
         </header>
         <section class="p-3 p-lg-4">
+            <div id="livewire-error" class="alert alert-danger d-none" role="alert" aria-live="assertive"></div>
+            <div wire:loading class="alert alert-info" role="status" aria-live="polite">Memproses permintaan...</div>
             {{ $slot }}
         </section>
     </main>
 </div>
 @livewireScripts
+<script>
+    document.addEventListener('livewire:init', () => {
+        Livewire.hook('request', ({ fail }) => {
+            fail(({ status, preventDefault }) => {
+                const alert = document.getElementById('livewire-error');
+                if (alert) {
+                    alert.textContent = `Permintaan gagal (${status}). Periksa data lalu coba lagi.`;
+                    alert.classList.remove('d-none');
+                }
+                preventDefault();
+            });
+        });
+    });
+</script>
 </body>
 </html>

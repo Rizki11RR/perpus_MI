@@ -16,8 +16,12 @@
             <h2 class="h5">Preview {{ $batch->file_name }}</h2>
             <p>Valid: {{ $batch->valid_rows }}. Tidak valid: {{ $batch->invalid_rows }}.</p>
             <div class="table-responsive"><table class="table"><thead><tr><th>Baris</th><th>Data</th><th>Status</th></tr></thead><tbody>@foreach($batch->rows as $row)<tr><td>{{ $row->row_number }}</td><td><code>{{ json_encode($row->payload, JSON_UNESCAPED_UNICODE) }}</code></td><td>{{ $row->is_valid ? 'Valid' : json_encode($row->errors, JSON_UNESCAPED_UNICODE) }}</td></tr>@endforeach</tbody></table></div>
-            @if($batch->valid_rows)<button class="btn btn-success" type="button" wire:click="commit" wire:loading.attr="disabled" wire:target="commit">Simpan baris valid</button>@endif
-            <button class="btn btn-outline-danger" type="button" wire:click="cancelBatch">Batalkan preview</button>
+            @if($batch->valid_rows)
+                <form wire:submit="commit" class="d-inline">
+                    <button class="btn btn-success" type="submit" wire:loading.attr="disabled" wire:target="commit"><span wire:loading.remove wire:target="commit">Simpan baris valid</span><span wire:loading wire:target="commit">Menyimpan...</span></button>
+                </form>
+            @endif
+            <button class="btn btn-outline-danger" type="button" wire:click="cancelBatch" wire:loading.attr="disabled">Batalkan preview</button>
         </div>
     @endif
 </div>
