@@ -31,7 +31,7 @@
             <div class="text-muted small text-uppercase px-3 mt-3 mb-1">Operasional</div>
             <a class="nav-link px-3 py-2 mb-1 {{ request()->routeIs('circulation') ? 'active' : '' }}" href="{{ route('circulation') }}">Sirkulasi</a>
             <a class="nav-link px-3 py-2 mb-1 {{ request()->routeIs('reports*') ? 'active' : '' }}" href="{{ route('reports') }}">Laporan</a>
-            <a class="nav-link px-3 py-2 mb-1 {{ request()->routeIs('imports') ? 'active' : '' }}" href="{{ route('imports') }}">Import data</a>
+
             @if(auth()->user()->isAdmin())
                 <div class="text-muted small text-uppercase px-3 mt-3 mb-1">Admin</div>
                 <a class="nav-link px-3 py-2 mb-1 {{ request()->routeIs('backups*') ? 'active' : '' }}" href="{{ route('backups') }}">Backup</a>
