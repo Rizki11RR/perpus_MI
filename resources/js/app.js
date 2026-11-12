@@ -2,6 +2,8 @@ import './bootstrap';
 import 'bootstrap';
 import Swal from 'sweetalert2';
 
+window.addEventListener('app-error', (event) => Swal.fire({ title: 'Gagal', text: event.detail, icon: 'error' }));
+
 window.addEventListener('click', async (event) => {
     const button = event.target.closest('[data-confirm-delete]');
     if (!button || button.dataset.confirmed === 'true') return;

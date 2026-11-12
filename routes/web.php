@@ -50,12 +50,14 @@ Route::middleware(['auth', 'active'])->prefix('data')->name('data.')->group(func
 Route::middleware(['auth', 'active'])->group(function () {
  Route::get('/sirkulasi', LoanIndex::class)->name('circulation');
  Route::get('/laporan', ReportIndex::class)->name('reports');
- Route::get('/import', ImportIndex::class)->name('imports');
- Route::get('/import/{type}', ImportIndex::class)->whereIn('type', ['books', 'students', 'teachers'])->name('imports.type');
+ Route::middleware('role:admin,petugas')->group(function () {
+  Route::get('/import', ImportIndex::class)->name('imports');
+  Route::get('/import/{type}', ImportIndex::class)->whereIn('type', ['books', 'students', 'teachers'])->name('imports.type');
+  Route::get('/laporan/{type}.csv', [ReportExportController::class, 'csv'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.csv');
+  Route::get('/laporan/{type}.json', [ReportExportController::class, 'json'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.json');
+ });
  Route::get('/backup', BackupIndex::class)->middleware('role:admin')->name('backups');
  Route::get('/backup/{backup}/download', [BackupController::class, 'download'])->middleware('role:admin')->name('backups.download');
- Route::get('/laporan/{type}.csv', [ReportExportController::class, 'csv'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.csv');
- Route::get('/laporan/{type}.json', [ReportExportController::class, 'json'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.json');
  Route::get('/laporan/cetak/katalog', [PrintController::class, 'catalog'])->name('reports.print.catalog');
  Route::get('/laporan/cetak/transaksi', [PrintController::class, 'loans'])->name('reports.print.loans');
 });

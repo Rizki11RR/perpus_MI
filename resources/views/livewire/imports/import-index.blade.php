@@ -1,4 +1,6 @@
 <div wire:loading.class="opacity-50" wire:target="preview,commit">
+    <div class="alert alert-info d-none" wire:loading.class.remove="d-none" wire:target="preview">Membaca dan memvalidasi file...</div>
+    <div class="alert alert-info d-none" wire:loading.class.remove="d-none" wire:target="commit">Menyimpan data...</div>
     @if(session('success'))<div class="alert alert-success" role="status">{{ session('success') }}</div>@endif
     @if(session('error'))<div class="alert alert-danger" role="alert">{{ session('error') }}</div>@endif
     @error('batch')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror
@@ -6,7 +8,7 @@
     <form wire:submit="preview" class="card card-body mb-3">
         <div class="row g-3">
             <div class="col-md-4"><label class="form-label" for="type">Jenis data</label><select id="type" class="form-select" wire:model="type"><option value="books">Buku</option><option value="students">Siswa</option><option value="teachers">Guru</option></select></div>
-            <div class="col-md-5"><label class="form-label" for="file">File CSV</label><input id="file" type="file" class="form-control" wire:model="file" accept=".csv,.txt">@error('file')<div class="text-danger small">{{ $message }}</div>@enderror</div>
+            <div class="col-md-5"><label class="form-label" for="file">File CSV</label><input id="file" type="file" class="form-control" wire:model="file" accept=".csv,.txt,.xlsx">@error('file')<div class="text-danger small">{{ $message }}</div>@enderror</div>
             <div class="col-md-3 d-flex align-items-end gap-2"><button type="button" class="btn btn-outline-secondary" wire:click="downloadTemplate">Template</button><button class="btn btn-primary" type="submit" wire:loading.attr="disabled" wire:target="preview">Preview</button></div>
         </div>
     </form>
