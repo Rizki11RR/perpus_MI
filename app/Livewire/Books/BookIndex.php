@@ -1,14 +1,24 @@
 <?php
+/**
+ * Tujuan: mengelola CRUD katalog buku dan import CSV buku.
+ * Caller: route catalog.books dan halaman Katalog Buku.
+ * Dependensi: Book, BookCategory, MasterDataCsvService, Livewire upload/pagination.
+ * Public utama: save(), importCsv(), edit(), deactivate(), delete(), render().
+ * Side effect: membaca/menulis buku dan menerima upload CSV.
+ */
 
 namespace App\Livewire\Books;
 
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Services\MasterDataCsvService;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 class BookIndex extends Component
 {
+    use WithFileUploads;
     use WithPagination;
 
     public string $search = '';
@@ -23,6 +33,7 @@ class BookIndex extends Component
     public string $description = '';
     public bool $isActive = true;
     public ?int $categoryId = null;
+    public $importFile;
 
     public function updatedSearch(): void { $this->resetPage(); }
     public function updatedCategoryFilter(): void { $this->resetPage(); }
@@ -53,6 +64,13 @@ class BookIndex extends Component
         ]);
         Book::updateOrCreate(['id' => $this->editingId], ['category_id'=>$data['categoryId'],'book_code'=>$data['bookCode'],'isbn'=>$data['isbn'],'title'=>$data['title'],'author'=>$data['author'],'publisher'=>$data['publisher'],'publication_year'=>$data['publicationYear'] !== '' ? $data['publicationYear'] : null,'description'=>$data['description'] !== '' ? $data['description'] : null,'is_active'=>$data['isActive']]);
         $this->resetForm(); session()->flash('success', 'Buku berhasil disimpan.');
+    }
+    public function importCsv(MasterDataCsvService $service): void
+    {
+        $this->validate(['importFile' => ['required', 'file', 'mimes:csv,txt', 'max:2048']]);
+        $count = $service->importBooks($this->importFile);
+        $this->reset('importFile');
+        session()->flash('success', "{$count} buku berhasil diimport.");
     }
     public function deactivate(int $id): void { Book::findOrFail($id)->update(['is_active' => false]); session()->flash('success','Buku dinonaktifkan.'); }
     public function delete(int $id): void

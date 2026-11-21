@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tujuan: mengelola CRUD kategori buku.
+ * Caller: route catalog.categories dan halaman Kategori Buku.
+ * Dependensi: BookCategory dan Livewire pagination.
+ * Public utama: save(), edit(), deactivate(), delete(), render().
+ * Side effect: membaca/menulis kategori.
+ */
 
 namespace App\Livewire\Books;
 

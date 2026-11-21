@@ -3,7 +3,7 @@
  * Tujuan: mendefinisikan seluruh route web aplikasi perpustakaan.
  * Caller: browser, Livewire, dan controller HTTP.
  * Dependensi: middleware auth/role, komponen Livewire, controller aplikasi.
- * Public utama: route dashboard, katalog, data, sirkulasi, laporan, backup.
+ * Public utama: route dashboard, katalog, data, CSV master, sirkulasi, laporan, backup.
  * Side effect: membaca/menulis data melalui handler route dan mengirim respons HTTP.
  */
 use App\Http\Controllers\AuthController;
@@ -34,6 +34,7 @@ Route::middleware(['auth', 'active'])->prefix('katalog')->name('catalog.')->grou
 });
 
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\MasterDataCsvController;
 use App\Http\Controllers\PrintController;
 Route::middleware(['auth', 'active'])->prefix('katalog/eksemplar')->name('catalog.copy.')->group(function () {
  Route::get('/{copy}/barcode.png', [BarcodeController::class, 'image'])->name('barcode.image');
@@ -50,8 +51,9 @@ use App\Livewire\Reports\ReportIndex;
 use App\Livewire\Backups\BackupIndex;
 use App\Http\Controllers\BackupController;
 Route::middleware(['auth', 'active'])->prefix('data')->name('data.')->group(function () {
- Route::get('/kelas', ClassIndex::class)->name('classes'); Route::get('/siswa', StudentIndex::class)->name('students'); Route::get('/guru', TeacherIndex::class)->name('teachers'); Route::get('/petugas', StaffIndex::class)->name('staff');
+ Route::get('/kelas', ClassIndex::class)->name('classes'); Route::get('/siswa', StudentIndex::class)->name('students'); Route::get('/siswa/export.csv', [MasterDataCsvController::class, 'students'])->name('students.export'); Route::get('/guru', TeacherIndex::class)->name('teachers'); Route::get('/petugas', StaffIndex::class)->name('staff');
 });
+Route::get('/katalog/buku/export.csv', [MasterDataCsvController::class, 'books'])->middleware(['auth', 'active'])->name('catalog.books.export');
 Route::middleware(['auth', 'active'])->group(function () {
  Route::get('/sirkulasi', LoanIndex::class)->name('circulation');
  Route::get('/laporan', ReportIndex::class)->name('reports');
