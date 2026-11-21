@@ -1,3 +1,10 @@
+<!--
+Tujuan: mencatat roadmap dan acceptance task SIPUS.
+Caller: developer, QA, dan pemilik produk.
+Dependensi: PRD, arsitektur, test suite, dan deployment.
+Public utama: phase implementasi, checklist kualitas, dan prioritas MVP.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # TASK --- Roadmap Implementasi SIPUS
 
 Checklist ini menjadi daftar kerja utama AI agent. Tandai selesai hanya
@@ -118,30 +125,12 @@ dan pembatalan di PRD lulus.
 -   [x] Laporan anggota aktif.
 -   [x] Laporan katalog.
 -   [x] Filter bulan/tahun dan filter relevan.
--   [x] Export CSV.
--   [x] Export JSON.
 -   [x] Print katalog.
 -   [x] Print laporan.
 -   [x] Print barcode label.
 -   [ ] Uji hasil print dengan printer.
 
-## Phase 7 --- Import/export
-
--   [x] Template import buku.
--   [x] Template import siswa.
--   [x] Template import guru.
--   [x] Upload file dan validasi tipe/ukuran.
--   [x] Parse file dan simpan staging batch.
--   [x] Preview data sebelum commit.
--   [x] Validasi kolom wajib dan format.
--   [x] Validasi duplikasi dan foreign key.
--   [x] Tampilkan kesalahan per baris.
--   [x] Implementasikan pilihan commit baris valid atau batal seluruh
-    batch.
--   [x] Catat activity log.
--   [x] Test import valid, invalid, dan duplikat.
-
-## Phase 8 --- Backup
+## Phase 7 --- Backup
 
 -   [x] Rancang backup database sesuai fasilitas hosting.
 -   [x] Simpan file di storage privat.
@@ -152,7 +141,7 @@ dan pembatalan di PRD lulus.
 -   [x] Dokumentasikan dan uji prosedur restore.
 -   [x] Jangan mengklaim backup berhasil sebelum file terverifikasi.
 
-## Phase 9 --- Hardening dan deployment
+## Phase 8 --- Hardening dan deployment
 
 -   [x] Audit otorisasi semua route/action.
 -   [x] Audit validasi input dan upload.
@@ -172,8 +161,7 @@ dan pembatalan di PRD lulus.
 
 Jika waktu terbatas, urutan minimum rilis: 1. Foundation/auth/role. 2.
 Database dan master data. 3. Sirkulasi pinjam-kembali yang konsisten. 4.
-Dashboard dan laporan dasar. 5. Backup. 6. Import/export lanjutan dan
-penyempurnaan UI.
+Dashboard dan laporan dasar. 5. Backup. 6. Penyempurnaan UI.
 
 Jangan merilis fitur sirkulasi sebelum test concurrency dan pengembalian
 parsial lulus.

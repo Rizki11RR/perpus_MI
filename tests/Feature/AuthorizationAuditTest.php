@@ -12,7 +12,7 @@ class AuthorizationAuditTest extends TestCase
 
     public function test_guest_cannot_open_protected_operational_routes(): void
     {
-        foreach (['/katalog/buku','/data/siswa','/sirkulasi','/laporan','/import','/backup'] as $path) $this->get($path)->assertRedirect('/login');
+        foreach (['/katalog/buku','/data/siswa','/sirkulasi','/laporan','/backup'] as $path) $this->get($path)->assertRedirect('/login');
     }
 
     public function test_petugas_cannot_open_admin_or_backup_routes(): void

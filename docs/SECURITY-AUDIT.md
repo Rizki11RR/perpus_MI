@@ -1,12 +1,16 @@
+<!--
+Tujuan: mencatat kontrol keamanan aplikasi SIPUS.
+Caller: maintainer, reviewer keamanan, dan operator deployment.
+Dependensi: middleware Laravel, validasi input, storage, dan database.
+Public utama: kontrol autentikasi, otorisasi, transaksi, dan backup.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # Audit keamanan Phase 9
 
 ## Selesai
 
 - Route operasional memakai `auth` dan `active`.
 - Pengaturan, backup, dan download backup memakai `role:admin`.
-- Export dibatasi tipe route yang dikenal.
-- Upload import memakai validasi file, MIME/ekstensi, dan ukuran 2 MB.
-- Commit import memakai transaction dan ownership check.
 - Backup memakai storage privat dan verifikasi ukuran.
 - Backup tidak menyimpan password atau token pengguna.
 - Sirkulasi memakai transaction dan row lock.

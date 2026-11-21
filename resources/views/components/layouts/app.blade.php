@@ -1,3 +1,8 @@
+{{-- Tujuan: layout utama halaman autentikasi aplikasi.
+Caller: seluruh view Livewire yang memakai layout aplikasi.
+Dependensi: Vite, Livewire, Bootstrap, route logout.
+Public utama: navigasi utama, notifikasi error, slot halaman.
+Side effect: memuat asset frontend dan mengirim request logout via POST. --}}
 <!doctype html>
 <html lang="id">
 <head>
@@ -6,7 +11,6 @@
     <title>{{ $title ?? 'SIPUS' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 </head>
 <body>
 <div class="d-flex">

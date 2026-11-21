@@ -1,3 +1,10 @@
+<!--
+Tujuan: menetapkan panduan engineering untuk SIPUS.
+Caller: agent coding, developer, reviewer, dan QA.
+Dependensi: Laravel, Livewire, database, test suite, dan dokumentasi proyek.
+Public utama: standar coding, keamanan, UI, testing, dan deployment.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # AGENTS.md
 
 ## Instruksi utama untuk AI coding agent
@@ -83,7 +90,7 @@ dengan shared hosting. Catat keputusan versi di `ARCHITECTURE.md`.
 -   Gunakan Eloquent relationship dan eager loading untuk menghindari
     N+1.
 -   Gunakan database transaction untuk proses pinjam, kembali,
-    pembatalan, dan import.
+    dan pembatalan.
 -   Gunakan `lockForUpdate()` pada proses sirkulasi yang rawan race
     condition.
 -   Gunakan pagination untuk tabel data.
@@ -116,7 +123,6 @@ dengan shared hosting. Catat keputusan versi di `ARCHITECTURE.md`.
 -   Transaksi yang sudah memiliki pengembalian parsial tidak boleh
     dibatalkan; sisa item harus diselesaikan melalui pengembalian
     normal.
--   Sebelum menyimpan import, tampilkan preview dan validasi.
 -   Petugas tidak boleh mengelola akun pengguna atau pengaturan sistem.
 -   Data yang sudah direferensikan transaksi tidak boleh dihapus secara
     permanen.
@@ -133,7 +139,7 @@ dengan shared hosting. Catat keputusan versi di `ARCHITECTURE.md`.
 -   Batasi percobaan login jika tersedia pada stack yang dipilih.
 -   Jangan menampilkan stack trace atau detail database pada production.
 -   Catat aksi penting: login (secukupnya), perubahan master,
-    peminjaman, pengembalian, pembatalan, import, dan backup.
+    peminjaman, pengembalian, pembatalan, dan backup.
 -   Jangan mencatat password, token, atau data sensitif ke activity log.
 -   Backup harus disimpan di storage privat dan hanya dapat diunduh oleh
     Admin yang berwenang.
@@ -164,7 +170,7 @@ batasan role. - Barcode unik. - Peminjaman multi-eksemplar. - Pencegahan
 peminjaman eksemplar yang sama secara bersamaan. - Batas maksimal
 pinjaman per peminjam. - Pengembalian parsial dan penuh. - Perhitungan
 denda dengan snapshot. - Pembatalan hanya oleh Admin dan hanya pada
-kondisi yang diizinkan. - Import preview, validasi, dan penyimpanan. -
+kondisi yang diizinkan. -
 Proteksi unduhan backup.
 
 Jangan menandai task selesai hanya karena halaman berhasil dibuka. Uji

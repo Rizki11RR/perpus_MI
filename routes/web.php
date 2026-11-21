@@ -1,4 +1,11 @@
 <?php
+/**
+ * Tujuan: mendefinisikan seluruh route web aplikasi perpustakaan.
+ * Caller: browser, Livewire, dan controller HTTP.
+ * Dependensi: middleware auth/role, komponen Livewire, controller aplikasi.
+ * Public utama: route dashboard, katalog, data, sirkulasi, laporan, backup.
+ * Side effect: membaca/menulis data melalui handler route dan mengirim respons HTTP.
+ */
 use App\Http\Controllers\AuthController;
 use App\Livewire\Dashboard;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +34,6 @@ Route::middleware(['auth', 'active'])->prefix('katalog')->name('catalog.')->grou
 });
 
 use App\Http\Controllers\BarcodeController;
-use App\Http\Controllers\ReportExportController;
 use App\Http\Controllers\PrintController;
 Route::middleware(['auth', 'active'])->prefix('katalog/eksemplar')->name('catalog.copy.')->group(function () {
  Route::get('/{copy}/barcode.png', [BarcodeController::class, 'image'])->name('barcode.image');
@@ -41,7 +47,6 @@ use App\Livewire\Members\TeacherIndex;
 use App\Livewire\Staff\StaffIndex;
 use App\Livewire\Circulation\LoanIndex;
 use App\Livewire\Reports\ReportIndex;
-use App\Livewire\Imports\ImportIndex;
 use App\Livewire\Backups\BackupIndex;
 use App\Http\Controllers\BackupController;
 Route::middleware(['auth', 'active'])->prefix('data')->name('data.')->group(function () {
@@ -51,10 +56,6 @@ Route::middleware(['auth', 'active'])->group(function () {
  Route::get('/sirkulasi', LoanIndex::class)->name('circulation');
  Route::get('/laporan', ReportIndex::class)->name('reports');
  Route::middleware('role:admin,petugas')->group(function () {
-  Route::get('/import', ImportIndex::class)->name('imports');
-  Route::get('/import/{type}', ImportIndex::class)->whereIn('type', ['books', 'students', 'teachers'])->name('imports.type');
-  Route::get('/laporan/{type}.csv', [ReportExportController::class, 'csv'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.csv');
-  Route::get('/laporan/{type}.json', [ReportExportController::class, 'json'])->whereIn('type', ['loans', 'books', 'students', 'teachers'])->name('reports.json');
  });
  Route::get('/backup', BackupIndex::class)->middleware('role:admin')->name('backups');
  Route::get('/backup/{backup}/download', [BackupController::class, 'download'])->middleware('role:admin')->name('backups.download');

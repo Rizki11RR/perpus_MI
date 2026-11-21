@@ -1,3 +1,10 @@
+<!--
+Tujuan: daftar smoke test rilis SIPUS.
+Caller: QA, operator deployment, dan maintainer.
+Dependensi: environment aplikasi, browser, database, dan backup.
+Public utama: checklist autentikasi, CRUD, sirkulasi, laporan, dan backup.
+Side effect: hanya memandu pengujian; tidak menjalankan I/O sendiri.
+-->
 # Smoke test SIPUS
 
 Environment external wajib menjalankan daftar ini sebelum rilis.
@@ -14,8 +21,7 @@ Environment external wajib menjalankan daftar ini sebelum rilis.
 - Multi-eksemplar dan hapus tag.
 - Pengembalian parsial dan penuh.
 - Pembatalan Admin, alasan wajib, Petugas ditolak.
-- Laporan, filter, CSV, JSON, print.
-- Import preview, invalid rows, commit, cancel.
+- Laporan, filter, dan print.
 - Backup create, verified status, download Admin, Petugas ditolak.
 
 ## Bukti

@@ -1,3 +1,10 @@
+<!--
+Tujuan: panduan operasi harian Admin SIPUS.
+Caller: admin, petugas, dan maintainer operasional.
+Dependensi: route aplikasi, database, dan storage backup.
+Public utama: login, master data, sirkulasi, backup, laporan, insiden.
+Side effect: memandu perubahan data dan pengelolaan file backup secara manual.
+-->
 # Panduan operasional Admin SIPUS
 
 ## Login
@@ -17,21 +24,13 @@ Gunakan username dan password akun aktif. Jangan berbagi password.
 
 Kelola kategori, buku, eksemplar, kelas, siswa, guru, dan petugas melalui menu masing-masing. Nonaktifkan data yang sudah direferensikan. Jangan hapus histori transaksi.
 
-## Import
-
-1. Buka `/import`.
-2. Unduh template.
-3. Isi CSV sesuai header.
-4. Upload dan periksa preview serta error per baris.
-5. Commit hanya baris valid atau batalkan preview.
-
 ## Backup
 
 Admin membuka `/backup`, membuat backup, memastikan status `verified`, lalu mengunduh file bila diperlukan. Simpan salinan pada lokasi privat yang aman.
 
 ## Laporan
 
-Gunakan `/laporan` untuk filter, CSV, JSON, dan print. Print barcode tersedia dari daftar eksemplar.
+Gunakan `/laporan` untuk filter dan print. Print barcode tersedia dari daftar eksemplar.
 
 ## Insiden
 

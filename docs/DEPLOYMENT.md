@@ -21,7 +21,7 @@
 5. Jalankan `php artisan optimize`.
 6. Pastikan `storage` dapat ditulis.
 7. Pastikan storage backup tetap privat.
-8. Uji login, master data, sirkulasi, laporan, import, dan backup.
+8. Uji login, master data, sirkulasi, laporan, dan backup.
 
 ## Keamanan
 

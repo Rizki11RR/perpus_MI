@@ -1,3 +1,10 @@
+<!--
+Tujuan: mendokumentasikan arah desain dan pola UI SIPUS.
+Caller: developer frontend dan reviewer UI.
+Dependensi: Blade, Bootstrap, Livewire, dan asset aplikasi.
+Public utama: navigasi, form, tabel, status visual, dashboard, dan print.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # DESIGN --- UI/UX dan Design System SIPUS
 
 ## 1. Arah visual
@@ -119,10 +126,9 @@ Susunan menu yang disarankan:
     -   Pengembalian
     -   Riwayat Transaksi
 4.  Laporan
-5.  Import / Export
-6.  Backup
-7.  Pengaturan
-8.  Manajemen Pengguna (Admin saja)
+5.  Backup
+6.  Pengaturan
+7.  Manajemen Pengguna (Admin saja)
 
 Menu harus disesuaikan dengan role. Namun otorisasi backend tetap wajib.
 

@@ -1,3 +1,10 @@
+<!--
+Tujuan: mendefinisikan kebutuhan produk SIPUS.
+Caller: pemilik produk, developer, QA, dan reviewer.
+Dependensi: domain perpustakaan, route aplikasi, database, dan backup.
+Public utama: scope fitur, aturan bisnis, laporan, dan acceptance criteria.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # PRD --- Sistem Informasi Perpustakaan Sekolah
 
 -   Status: Draft dasar kebutuhan
@@ -9,7 +16,7 @@
 
 Sistem Informasi Perpustakaan Sekolah (SIPUS) adalah aplikasi web
 internal untuk mengelola katalog buku, eksemplar fisik, data siswa dan
-guru, petugas, peminjaman, pengembalian, laporan, import/export, dan
+guru, petugas, peminjaman, pengembalian, dan laporan,
 backup.
 
 Aplikasi dipakai oleh beberapa Admin/Petugas dari komputer berbeda
@@ -36,7 +43,7 @@ lihat, ubah, dan deaktivasi data siswa, guru, petugas, kategori, buku,
 dan eksemplar. - Kelola akun pengguna dan role. - Atur profil
 perpustakaan dan aturan peminjaman. - Input/ubah transaksi sesuai
 kebijakan. - Melakukan pengembalian. - Melihat seluruh transaksi. -
-Membatalkan transaksi dengan alasan. - Import/export data. - Membuat dan
+Membatalkan transaksi dengan alasan. - Membuat dan
 mengunduh backup. - Melihat activity log.
 
 ### Petugas
@@ -84,7 +91,6 @@ tabel eksemplar.
 -   Informasi penerbit, tahun, deskripsi, kategori.
 -   Informasi lokasi rak.
 -   Kelola eksemplar fisik.
--   Import/export katalog.
 -   Cetak katalog.
 -   Barcode Code 128 unik untuk setiap eksemplar.
 -   Cetak label barcode.
@@ -160,17 +166,10 @@ sebagai snapshot saat transaksi dibuat.
 Filter bulan dan tahun, serta filter lain jika relevan: - Transaksi
 peminjaman. - Pengembalian. - Pinjaman aktif. - Pinjaman terlambat. -
 Anggota aktif. - Katalog buku. - Rekap peminjaman per siswa/guru. -
-Ekspor CSV dan JSON. - Tampilan siap cetak.
+Tampilan siap cetak.
 
-### 4.11 Import, export, dan backup
+### 4.11 Backup
 
--   Import siswa, guru, dan buku.
--   Preview isi file sebelum penyimpanan.
--   Validasi kolom wajib, format, duplikasi, relasi, dan barcode.
--   Tampilkan jumlah baris valid dan invalid serta alasan kesalahan.
--   Admin memilih kebijakan untuk melanjutkan hanya baris valid atau
-    membatalkan seluruh batch; tidak boleh mengimpor diam-diam.
--   Export JSON/CSV.
 -   Backup database dan/atau data aplikasi.
 -   Catat riwayat backup.
 -   File backup disimpan di lokasi privat, bukan public web root.
@@ -270,7 +269,6 @@ item tidak boleh hilang saat item lain dalam transaksi masih dipinjam.
     transaksi dengan benar.
 9.  Denda Rp0 tidak menghasilkan tagihan.
 10. Pembatalan hanya dapat dilakukan Admin dan memiliki alasan.
-11. Import menampilkan preview dan kesalahan sebelum menyimpan.
-12. Laporan dapat difilter dan diekspor.
-13. Backup tidak dapat diakses tanpa otorisasi.
-14. Test fitur utama lulus.
+11. Laporan dapat difilter dan dicetak.
+12. Backup tidak dapat diakses tanpa otorisasi.
+13. Test fitur utama lulus.

@@ -1,3 +1,10 @@
+<!--
+Tujuan: menjelaskan arsitektur dan batas tanggung jawab SIPUS.
+Caller: developer, reviewer, dan operator deployment.
+Dependensi: Laravel, Livewire, Bootstrap, database, dan storage backup.
+Public utama: struktur aplikasi, data model, integrasi, dan deployment.
+Side effect: hanya dokumentasi; tidak melakukan perubahan runtime.
+-->
 # ARCHITECTURE --- Arsitektur Teknis SIPUS
 
 ## 1. Prinsip arsitektur
@@ -9,7 +16,7 @@
 -   Service/action layer untuk proses bisnis penting.
 -   Database transaction dan row locking untuk menjaga konsistensi
     sirkulasi.
--   File backup dan file import berada pada storage privat.
+-   File backup berada pada storage privat.
 -   Tidak membutuhkan Redis, queue worker permanen, websocket, atau
     Docker pada production MVP.
 
@@ -37,7 +44,6 @@ Keputusan versi Phase 0:
   Build               Vite / toolchain yang kompatibel dengan versi template
   Notifikasi          SweetAlert2 (konfirmasi), toast
   Barcode             Generator Code 128 yang kompatibel dengan PHP
-  Export              CSV/JSON; library tambahan hanya jika dibutuhkan
   Hosting             Shared hosting/cPanel
   Local development   Linux Mint
 
@@ -90,8 +96,6 @@ melalui Laravel/Livewire.
 -   `library_profiles`: identitas perpustakaan/sekolah.
 -   `library_settings`: aturan sirkulasi.
 -   `activity_logs`: audit aksi.
--   `import_batches`: metadata proses import.
--   `import_batch_rows`: staging data per baris.
 -   `backup_logs`: riwayat backup.
 
 ## 5. Skema database yang disarankan
@@ -231,11 +235,6 @@ tenggang, timezone, dan updated_by.
 
 Simpan user, action, module, description, subject_type/id, IP,
 created_at. Log bersifat append-only dari aplikasi.
-
-### import_batches dan import_batch_rows
-
-Simpan jenis import, nama file, pengunggah, status, ringkasan jumlah
-valid/invalid, data baris staging, dan kesalahan validasi.
 
 ### backup_logs
 
@@ -412,6 +411,4 @@ memaksakan struktur jika starter project sudah memiliki pola lebih baik.
 -   Apakah guru boleh meminjam dengan batas dan durasi berbeda.
 -   Kebijakan denda final dan masa tenggang.
 -   Apakah pengembalian rusak/hilang perlu proses pencatatan khusus.
--   Kebijakan import: commit baris valid saja atau seluruh batch harus
-    valid.
 -   Format nomor transaksi yang diinginkan.
